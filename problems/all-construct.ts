@@ -26,7 +26,7 @@ measure(() =>
 );
 measure(() => allConstructBasic("aaa", ["a", "aa", "aaa"]));
 
-const allConstruct = (
+const allConstructMemo = (
   target: string,
   wordBank: string[],
   memo: Record<string, string[][]> = {}
@@ -46,12 +46,79 @@ const allConstruct = (
   }
 
   memo[target] = allCombinations;
-  return allCombinations;
+  return Array.from(
+    new Set(allCombinations.map((arr) => JSON.stringify(arr.sort())))
+  ).map((json) => JSON.parse(json));
 };
 
-measure(() => allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"]));
+console.log("DP - memo ↓");
+measure(() => allConstructMemo("abcdef", ["ab", "abc", "cd", "def", "abcd"]));
 measure(() =>
-  allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])
+  allConstructMemo("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])
 );
-measure(() => allConstruct("aaa", ["a", "aa", "aaa"]));
-/* measure(() => allConstruct("aaaaaaaaaaaaaaaaa", ["a", "aa", "aaa"])); */
+measure(() => allConstructMemo("aaa", ["a", "aa", "aaa"]));
+/* measure(
+  () =>
+    allConstructMemo(
+      "aaaaaaaaaaaaaaaaaaa",
+      Array(3)
+        .fill("a")
+        .map((str, index) => str.repeat(index + 1))
+    ).length
+); */
+
+// Tabulation
+const allConstructTable = (target: string, wordBank: string[]): string[][] => {
+  const table: Set<string>[] = Array(target.length + 1)
+    .fill(undefined)
+    .map(() => new Set() as Set<string>);
+  table[0].add("");
+
+  for (let i = 0; i < target.length; i++) {
+    if (table[i]) {
+      for (let j = 0; j < wordBank.length; j++) {
+        const word = wordBank[j];
+        if (target.slice(i).startsWith(word)) {
+          table[i + word.length].add(word);
+        }
+      }
+    }
+  }
+
+  const generateCombinations = (): string[][] => {
+    const dp: string[][][] = Array(target.length + 1)
+      .fill(null)
+      .map(() => []);
+    dp[0] = [[]];
+
+    for (let i = 1; i <= target.length; i++) {
+      for (const word of table[i]) {
+        dp[i - word.length].forEach((combo) => dp[i].push([word, ...combo]));
+      }
+    }
+
+    return dp[target.length];
+  };
+
+  const res = generateCombinations();
+
+  return Array.from(new Set(res.map((arr) => JSON.stringify(arr.sort())))).map(
+    (json) => JSON.parse(json)
+  );
+};
+
+console.log("DP - table ↓");
+measure(() => allConstructTable("abcdef", ["ab", "abc", "cd", "def", "abcd"]));
+measure(() =>
+  allConstructTable("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])
+);
+measure(() => allConstructTable("aaa", ["a", "aa", "aaa"]));
+measure(
+  () =>
+    allConstructTable(
+      "aaaaaaaaaaaaaaaaaaa",
+      Array(3)
+        .fill("a")
+        .map((str, index) => str.repeat(index + 1))
+    ).length
+);
