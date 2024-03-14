@@ -47,6 +47,8 @@ const canConstruct = (
   return false;
 };
 
+
+console.log("DP ↓");
 measure(() => canConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"]));
 measure(() =>
   canConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])

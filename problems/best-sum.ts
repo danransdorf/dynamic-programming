@@ -58,6 +58,7 @@ const bestSum = (
   return memo[targetSum];
 };
 
+console.log("DP ↓");
 measure(() => bestSum(20, [1, 3, 5, 7, 9]));
 measure(() => bestSum(7, [5, 3, 4, 7]));
 measure(() => bestSum(250, [7, 14]));
