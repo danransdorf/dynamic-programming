@@ -43,6 +43,7 @@ measure(() => fibTable(40));
 measure(() => fibTable(1200));
 measure(() => fibTable(25000));
 
+// Pointers
 const fibPointers = (n: number): number => {
   let l = 1,
     r = 1;
