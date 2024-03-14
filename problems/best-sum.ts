@@ -28,7 +28,6 @@ const bestSumBasic = (
   return bestCombination;
 };
 
-
 measure(() => bestSumBasic(20, [1, 3, 5, 7, 9]));
 measure(() => bestSumBasic(7, [5, 3, 4, 7]));
 measure(() => bestSumBasic(250, [7, 14]));
@@ -40,7 +39,7 @@ const bestSum = (
 ): number[] | null => {
   if (targetSum < 0) return null;
   if (targetSum == 0) return [];
-  if (targetSum in memo) return memo[targetSum]
+  if (targetSum in memo) return memo[targetSum];
 
   let bestCombination: number[] | null = null;
   for (const num of numbers) {
@@ -54,13 +53,13 @@ const bestSum = (
     }
   }
 
-  memo[targetSum] = bestCombination
+  memo[targetSum] = bestCombination;
   return memo[targetSum];
 };
 
-console.log("DP ↓");
+console.log("DP - memo ↓");
 measure(() => bestSum(20, [1, 3, 5, 7, 9]));
 measure(() => bestSum(7, [5, 3, 4, 7]));
 measure(() => bestSum(250, [7, 14]));
 measure(() => bestSum(15001, [2, 4, 6, 8, 10, 12, 14, 16]));
-measure(() => bestSum(15001, [1,2,3,4,5,6,7,8,16,32,64,128]));
+measure(() => bestSum(15001, [1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64, 128]));

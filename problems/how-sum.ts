@@ -43,7 +43,7 @@ const howSum = (
   return null;
 };
 
-console.log("DP ↓");
+console.log("DP - memo ↓");
 measure(() => howSum(20, [1, 3, 5, 7, 9]));
 measure(() => howSum(7, [5, 3, 4, 7]));
 measure(() => howSum(250, [7, 14]));

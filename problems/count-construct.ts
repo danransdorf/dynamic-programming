@@ -67,7 +67,7 @@ const countConstruct = (
   return count;
 };
 
-console.log("DP ↓");
+console.log("DP - memo ↓");
 measure(() => countConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"]));
 measure(() =>
   countConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"])
