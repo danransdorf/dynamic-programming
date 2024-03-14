@@ -18,6 +18,7 @@ const fib = (n: number, memo: Record<number, number> = {}): number => {
   return memo[n];
 };
 
+console.log("DP ↓")
 measure(() => fib(20));
 measure(() => fib(30));
 measure(() => fib(40));

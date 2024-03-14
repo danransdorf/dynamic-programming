@@ -36,6 +36,7 @@ const canSum = (targetSum: number, numbers: number[], memo: Record<number, boole
   return false;
 };
 
+console.log("DP ↓")
 measure(() => canSum(20, [1,3,5,7,9]))
 measure(() => canSum(7, [5, 3, 4, 7]));
 measure(() => canSum(250, [7,14]));

@@ -29,6 +29,7 @@ const gridTraveler = (
   return memo[key];
 };
 
+console.log("DP ↓")
 measure(() => gridTraveler(10, 10));
 measure(() => gridTraveler(10, 15));
 measure(() => gridTraveler(17, 15));
