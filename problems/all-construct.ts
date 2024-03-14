@@ -35,13 +35,14 @@ const allConstruct = (
   if (target in memo) return memo[target];
 
   const allCombinations = [];
-  for (const word of wordBank.filter((w) => target.startsWith(w))) {
-    allCombinations.push(
-      ...allConstructBasic(target.slice(word.length), wordBank).map((combo) => [
-        word,
-        ...combo,
-      ])
-    );
+  for (const word of wordBank) {
+    if (target.startsWith(word)) {
+      allCombinations.push(
+        ...allConstructBasic(target.slice(word.length), wordBank).map(
+          (combo) => [word, ...combo]
+        )
+      );
+    }
   }
 
   memo[target] = allCombinations;

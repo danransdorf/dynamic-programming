@@ -60,8 +60,10 @@ const countConstruct = (
   if (target in memo) return memo[target];
 
   let count = 0;
-  for (const word of wordBank.filter((w) => target.startsWith(w))) {
-    count += countConstruct(target.slice(word.length), wordBank, memo);
+  for (const word of wordBank) {
+    if (target.startsWith(word)) {
+      count += countConstruct(target.slice(word.length), wordBank, memo);
+    }
   }
   memo[target] = count;
   return count;
