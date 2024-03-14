@@ -21,7 +21,7 @@ measure(() => canSumBasic(20, [1, 3, 5, 7, 9]));
 measure(() => canSumBasic(7, [5, 3, 4, 7]));
 measure(() => canSumBasic(250, [7, 14]));
 
-const canSum = (
+const canSumMemo = (
   targetSum: number,
   numbers: number[],
   memo: Record<number, boolean> = {}
@@ -31,7 +31,7 @@ const canSum = (
   if (targetSum in memo) return memo[targetSum];
 
   for (const num of numbers) {
-    if (canSum(targetSum - num, numbers, memo)) return true;
+    if (canSumMemo(targetSum - num, numbers, memo)) return true;
     memo[targetSum - num] = false;
   }
 
@@ -39,7 +39,31 @@ const canSum = (
 };
 
 console.log("DP - memo ↓");
-measure(() => canSum(20, [1, 3, 5, 7, 9]));
-measure(() => canSum(7, [5, 3, 4, 7]));
-measure(() => canSum(250, [7, 14]));
-measure(() => canSum(15001, [2, 4, 6, 8, 10, 12, 14, 16]));
+measure(() => canSumMemo(20, [1, 3, 5, 7, 9]));
+measure(() => canSumMemo(7, [5, 3, 4, 7]));
+measure(() => canSumMemo(250, [7, 14]));
+measure(() => canSumMemo(15001, [2, 4, 6, 8, 10, 12, 14, 16]));
+measure(() => canSumMemo(25001, [2, 4, 6, 8, 10, 12, 14, 16]));
+
+// Tabulation
+const canSumTable = (targetSum: number, numbers: number[]): boolean => {
+  const table = Array(targetSum + 1).fill(false);
+  table[0] = true;
+
+  for (let i = 0; i < targetSum + 1; i++) {
+    if (table[i]) {
+      for (const num of numbers) {
+        table[i + num] = true;
+      }
+    }
+  }
+
+  return table[targetSum];
+};
+
+console.log("DP - table ↓");
+measure(() => canSumTable(20, [1, 3, 5, 7, 9]));
+measure(() => canSumTable(7, [5, 3, 4, 7]));
+measure(() => canSumTable(250, [7, 14]));
+measure(() => canSumTable(15001, [2, 4, 6, 8, 10, 12, 14, 16]));
+measure(() => canSumTable(25001, [2, 4, 6, 8, 10, 12, 14, 16]));
