@@ -1,3 +1,5 @@
+// Given a 'w' by 'h' grid, how many ways can a person go from top left to bottom right corner without taking steps away from the target (up, left).
+
 import { measure } from "../utils/measure";
 
 const gridTravelerBasic = (w: number, h: number): number =>

@@ -1,3 +1,5 @@
+// Return the value of 'n'th element of Fibonacci's sequence
+
 import { measure } from "../utils/measure";
 
 const fibBasic = (n: number): number =>
